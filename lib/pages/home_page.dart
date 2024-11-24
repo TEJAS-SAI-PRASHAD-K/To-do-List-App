@@ -1,6 +1,8 @@
 import 'package:first_1_flutter_application/pages/add_task_page.dart';
+import 'package:first_1_flutter_application/widgets/to_do_tile.dart';
 import 'package:flutter/material.dart';
 
+import '../models/task.dart';
 import '../widgets/theme_switch_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,13 +15,53 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    List<Task> tasks = [
+      Task(
+        title: "Complete Flutter project",
+        description: "Finish the UI and integrate the backend APIs.",
+        addedOn: "2024-11-20",
+        deadline: "2024-11-30",
+        taskCompleted: false,
+      ),
+      Task(
+        title: "Team meeting",
+        description: "Discuss project roadmap and key deliverables.",
+        addedOn: "2024-11-21",
+        deadline: "2024-11-24",
+        taskCompleted: true,
+      ),
+      Task(
+        title: "Prepare presentation",
+        description:
+            "Create slides for the Suicide Prevention and Mental Health presentation.",
+        addedOn: "2024-11-22",
+        deadline: "2024-11-25",
+        taskCompleted: false,
+      ),
+      Task(
+        title: "Submit expense report",
+        description:
+            "Compile and submit the monthly expense report to the finance team.",
+        addedOn: "2024-11-15",
+        deadline: "2024-11-26",
+        taskCompleted: true,
+      ),
+      Task(
+        title: "Code review",
+        description: "Review the pull requests and provide feedback.",
+        addedOn: "2024-11-18",
+        deadline: "2024-11-24",
+        taskCompleted: false,
+      ),
+    ];
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (builder) => AddTaskPage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (builder) => const AddTaskPage()));
         },
         child: const Icon(Icons.add),
       ),
@@ -85,18 +127,27 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (builder) => AddTaskPage()));
+                                  builder: (builder) => const AddTaskPage()));
                         },
                       ),
                       const ThemeSwitchButton(),
                     ],
                   ),
-                  Text("Tuesday"),
+                  const Text("Tuesday"),
                 ],
               ),
             ),
           ),
-          const SliverToBoxAdapter(),
+          SliverList.builder(
+            itemCount: tasks.length,
+            itemBuilder: (context, index) {
+              final Task task = tasks[index];
+              return ToDoTile(
+                task: task,
+                onChanged: (value) { },
+              );
+            },
+          ),
         ],
       ),
     );
