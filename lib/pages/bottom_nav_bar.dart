@@ -1,5 +1,5 @@
-import 'package:first_1_flutter_application/completed.dart';
-import 'package:first_1_flutter_application/home_page.dart';
+import 'package:first_1_flutter_application/pages/completed.dart';
+import 'package:first_1_flutter_application/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -22,9 +22,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
         child: pagelist[myIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.black,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          selectedItemColor: Theme.of(context).colorScheme.primary,
+          unselectedItemColor: Theme.of(context).colorScheme.tertiary,
           iconSize: 28,
           selectedFontSize: 14,
           unselectedFontSize: 14,
@@ -38,14 +38,26 @@ class _BottomNavBarState extends State<BottomNavBar> {
           items: [
             BottomNavigationBarItem(
               icon: myIndex == 0
-                  ? const Icon(Icons.event_note)
-                  : const Icon(Icons.event_note_outlined),
+                  ? const Padding(
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: Icon(Icons.list),
+                    )
+                  : const Padding(
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: Icon(Icons.list_outlined),
+                    ),
               label: "To-dos",
             ),
             BottomNavigationBarItem(
               icon: myIndex == 1
-                  ? const Icon(Icons.check_circle)
-                  : const Icon(Icons.check_circle_outline),
+                  ? const Padding(
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: Icon(Icons.check_circle),
+                    )
+                  : const Padding(
+                      padding: EdgeInsets.only(top: 8.0),
+                      child: Icon(Icons.check_circle_outline),
+                    ),
               label: "Completed",
             ),
           ]),
