@@ -1,3 +1,4 @@
+import 'package:first_1_flutter_application/utils/others/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class AddTaskPage extends StatefulWidget {
@@ -11,6 +12,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   int? _dayValue = 1;
   int? _suggestionValue;
   int? _labelsValue;
+  DateTime dateTime = DateTime.now();
+  DateTime deadline = DateTime.now();
   late TextEditingController _textController = TextEditingController();
   late TextEditingController _textControllerDescription =
       TextEditingController();
@@ -124,7 +127,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final DateTime? deadlineDateTime = await pickDateTime(
+                              context, dateTime); // Call the picker
+                          if (deadlineDateTime != null) {
+                            setState(() {
+                              deadline = deadlineDateTime; // Update the state
+                            });
+                          }
+                        },
                         padding: const EdgeInsets.all(8),
                         style: IconButton.styleFrom(
                             shape: const CircleBorder(),
@@ -137,6 +148,18 @@ class _AddTaskPageState extends State<AddTaskPage> {
                             size: 30,
                           ),
                         )),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        '${deadline.year}/${deadline.month}/${deadline.day} '
+                        '${deadline.hour}:${deadline.minute}',
+                        style: const TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w300),
+                      ),
+                    ),
                   ],
                 ),
               ),
