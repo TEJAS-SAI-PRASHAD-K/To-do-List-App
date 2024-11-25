@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'pallete.dart';
 
 ThemeData darkTheme = ThemeData(
+  useMaterial3: true,
   splashColor: darksplashColor,
   dialogBackgroundColor: darkdialogBackgroundColor,
   unselectedWidgetColor: darkunselectedWidgetColor,
@@ -18,6 +19,7 @@ ThemeData darkTheme = ThemeData(
 
 // Define your dark mode theme
 ThemeData lightTheme = ThemeData(
+  useMaterial3: true,
   splashColor: lightsplashColor,
   dialogBackgroundColor: lightdialogBackgroundColor,
   unselectedWidgetColor: lightunselectedWidgetColor,

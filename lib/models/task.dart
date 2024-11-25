@@ -1,9 +1,21 @@
+import 'package:hive/hive.dart';
+
+part 'task.g.dart';
+
+@HiveType(typeId: 2)
 class Task {
+  @HiveField(1)
   String title;
+  @HiveField(2)
   String description;
+  @HiveField(3)
   String addedOn;
+  @HiveField(4)
   String deadline;
+  @HiveField(5)
   bool taskCompleted;
+  @HiveField(6)
+  String label;
 
   Task({
     required this.title,
@@ -11,40 +23,41 @@ class Task {
     required this.addedOn,
     required this.deadline,
     required this.taskCompleted,
+    required this.label,
   });
+
   Task copyWith({
     String? title,
     String? description,
     String? addedOn,
     String? deadline,
     bool? taskCompleted,
-  }) {
-    return Task(
-      title: title ?? this.title,
-      description: description ?? this.description,
-      addedOn: addedOn ?? this.addedOn,
-      deadline: deadline ?? this.deadline,
-      taskCompleted: taskCompleted ?? this.taskCompleted,
-    );
-  }
+    String? label,
+  }) =>
+      Task(
+        title: title ?? this.title,
+        description: description ?? this.description,
+        addedOn: addedOn ?? this.addedOn,
+        deadline: deadline ?? this.deadline,
+        taskCompleted: taskCompleted ?? this.taskCompleted,
+        label: label ?? this.label,
+      );
 
-  factory Task.fromJson(Map<String, dynamic> json) {
-    return Task(
-      title: json["title"] ?? "",
-      description: json["description"] ?? "",
-      addedOn: json["addedOn"] ?? "",
-      deadline: json["deadline"] ?? "",
-      taskCompleted: json["taskCompleted"] ?? false,
-    );
-  }
+  factory Task.fromJson(Map<String, dynamic> json) => Task(
+        title: json["title"],
+        description: json["description"],
+        addedOn: json["addedOn"],
+        deadline: json["deadline"],
+        taskCompleted: json["taskCompleted"],
+        label: json["label"],
+      );
 
-  Map<String, dynamic> toJson() {
-    return {
-      "title": title,
-      "description": description,
-      "addedOn": addedOn,
-      "deadline": deadline,
-      "taskCompleted": taskCompleted,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "description": description,
+        "addedOn": addedOn,
+        "deadline": deadline,
+        "taskCompleted": taskCompleted,
+        "label": label,
+      };
 }

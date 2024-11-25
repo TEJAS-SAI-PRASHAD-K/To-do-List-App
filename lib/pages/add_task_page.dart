@@ -10,6 +10,7 @@ class AddTaskPage extends StatefulWidget {
 class _AddTaskPageState extends State<AddTaskPage> {
   int? _dayValue = 1;
   int? _suggestionValue;
+  int? _labelsValue;
   late TextEditingController _textController = TextEditingController();
   late TextEditingController _textControllerDescription =
       TextEditingController();
@@ -37,6 +38,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
       "Send a Birthday Card",
       "Go for a Jog",
       "Schedule Team Meeting"
+    ];
+    List<String> labels = [
+      "Work",
+      "Urgent",
+      "Personal",
+      "Home",
+      "Health",
+      "Others"
     ];
     return Scaffold(
       body: Padding(
@@ -97,6 +106,88 @@ class _AddTaskPageState extends State<AddTaskPage> {
                         onSelected: (selected) {
                           setState(() {
                             _dayValue = selected ? index : null;
+                          });
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 12),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        padding: const EdgeInsets.all(8),
+                        style: IconButton.styleFrom(
+                            shape: const CircleBorder(),
+                            side: BorderSide(
+                                color: Theme.of(context).colorScheme.tertiary)),
+                        icon: const Padding(
+                          padding: EdgeInsets.fromLTRB(2, 0, 0, 2),
+                          child: Icon(
+                            Icons.more_time_rounded,
+                            size: 30,
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 12),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 16, 0, 8),
+                child: Text(
+                  "Labels",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.tertiary,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 50, // Set a fixed height for the horizontal ListView
+                child: ListView.builder(
+                  scrollDirection:
+                      Axis.horizontal, // Make the ListView horizontal
+                  itemCount: 6,
+                  itemBuilder: (_, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0), // Optional spacing
+                      child: ChoiceChip(
+                        checkmarkColor: Theme.of(context).colorScheme.surface,
+                        selectedColor: Theme.of(context).colorScheme.primary,
+                        disabledColor: Theme.of(context).colorScheme.surface,
+                        label: Text(
+                          labels[index],
+                          style: TextStyle(
+                            color: _labelsValue == index
+                                ? Theme.of(context).colorScheme.surface
+                                : Theme.of(context).colorScheme.primary,
+                            fontSize: 16,
+                          ),
+                        ),
+                        selected: _labelsValue == index,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        onSelected: (selected) {
+                          setState(() {
+                            _labelsValue = selected ? index : null;
                           });
                         },
                       ),
@@ -247,11 +338,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ],
               ),
             ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 200,
-              ),
-            ),
+            // const SliverToBoxAdapter(
+            //   child: SizedBox(
+            //     height: 100,
+            //   ),
+            // ),
             // SliverToBoxAdapter(
             //   child: Padding(
             //     padding: const EdgeInsets.all(12.0),

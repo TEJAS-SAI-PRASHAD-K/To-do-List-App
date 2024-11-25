@@ -1,9 +1,18 @@
+import 'package:first_1_flutter_application/models/hive_adapters.dart';
 import 'package:first_1_flutter_application/pages/bottom_nav_bar.dart';
 import 'package:first_1_flutter_application/utils/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+import 'models/task.dart';
+import 'models/user.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  registerHiveAdapters();
+  await Hive.openBox<Task>(' todoTasks');
   runApp(
     const ProviderScope(
       child: MyApp(),

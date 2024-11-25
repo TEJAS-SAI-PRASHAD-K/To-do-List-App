@@ -2,17 +2,29 @@ import 'package:first_1_flutter_application/utils/others/add_newline.dart';
 import 'package:flutter/material.dart';
 import '../models/task.dart';
 
-class ToDoTile extends StatelessWidget {
+class ToDoTile extends StatefulWidget {
   final Task task;
-  const ToDoTile({super.key, required this.task, required this.onChanged});
-  final Function(bool?)? onChanged;
+  const ToDoTile({super.key, required this.task});
+
+  @override
+  State<ToDoTile> createState() => _ToDoTileState();
+}
+
+class _ToDoTileState extends State<ToDoTile> {
+  void taskCompletedStateSwitcher() {
+    setState(() {
+      widget.task.taskCompleted
+          ? widget.task.taskCompleted = false
+          : widget.task.taskCompleted = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
       child: Container(
-        height: 200,
+        height: 250,
         width: MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
           color: Colors.greenAccent.shade200,
@@ -27,24 +39,22 @@ class ToDoTile extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 16, 0, 0),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      addNewlines(task.title, 15),
+                      addNewlines(widget.task.title, 15),
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w800,
                           color: Theme.of(context).colorScheme.primary),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(80, 0, 0, 0),
-                      child: Transform.scale(
-                        scale: 1.8,
-                        child: Checkbox(
-                          value: task.taskCompleted,
-                          onChanged: onChanged,
-                          shape: const CircleBorder(),
-                          side: const BorderSide(),
-                        ),
+                      padding: const EdgeInsets.fromLTRB(0, 0, 12, 0),
+                      child: IconButton(
+                        onPressed: taskCompletedStateSwitcher,
+                        icon: widget.task.taskCompleted
+                            ? const Icon(Icons.check)
+                            : const Icon(Icons.close),
                       ),
                     ),
                   ],
@@ -59,7 +69,7 @@ class ToDoTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          task.addedOn,
+                          widget.task.addedOn,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 20,
@@ -91,7 +101,7 @@ class ToDoTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          task.deadline,
+                          widget.task.deadline,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
