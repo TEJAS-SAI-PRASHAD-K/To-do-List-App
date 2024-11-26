@@ -266,6 +266,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                         onSelected: (selected) {
                           setState(() {
                             _suggestionValue = selected ? index : null;
+                            _textController.text =
+                                selected ? suggestions[index] : "";
                           });
                         },
                       ),
