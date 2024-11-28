@@ -3,6 +3,7 @@ import 'package:first_1_flutter_application/widgets/to_do_tile.dart';
 import 'package:flutter/material.dart';
 
 import '../models/task.dart';
+import '../utils/others/check hive box.dart';
 import '../widgets/theme_switch_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -67,8 +68,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (builder) => const AddTaskPage()));
+          checkUserInHive();
         },
         child: const Icon(Icons.add),
       ),

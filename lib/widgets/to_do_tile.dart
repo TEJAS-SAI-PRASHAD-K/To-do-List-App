@@ -13,7 +13,7 @@ class ToDoTile extends StatefulWidget {
 class _ToDoTileState extends State<ToDoTile> {
   void taskCompletedStateSwitcher() {
     setState(() {
-      widget.task.taskCompleted
+      widget.task.taskCompleted!
           ? widget.task.taskCompleted = false
           : widget.task.taskCompleted = true;
     });
@@ -42,7 +42,7 @@ class _ToDoTileState extends State<ToDoTile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      addNewlines(widget.task.title, 15),
+                      addNewlines(widget.task.title!, 15),
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w800,
@@ -52,7 +52,7 @@ class _ToDoTileState extends State<ToDoTile> {
                       padding: const EdgeInsets.fromLTRB(0, 0, 12, 0),
                       child: IconButton(
                         onPressed: taskCompletedStateSwitcher,
-                        icon: widget.task.taskCompleted
+                        icon: widget.task.taskCompleted!
                             ? const Icon(Icons.check)
                             : const Icon(Icons.close),
                       ),
@@ -69,7 +69,7 @@ class _ToDoTileState extends State<ToDoTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.task.addedOn,
+                          widget.task.addedOn!,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 20,
@@ -101,7 +101,7 @@ class _ToDoTileState extends State<ToDoTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.task.deadline,
+                          widget.task.deadline!,
                           style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,

@@ -1,5 +1,10 @@
+import 'dart:developer';
+
+import 'package:first_1_flutter_application/utils/others/add_task.dart';
 import 'package:first_1_flutter_application/utils/others/date_time_picker.dart';
 import 'package:flutter/material.dart';
+
+import '../models/task.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({super.key});
@@ -17,6 +22,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   late TextEditingController _textController = TextEditingController();
   late TextEditingController _textControllerDescription =
       TextEditingController();
+  late final bool taskCompleted = false;
 
   @override
   void initState() {
@@ -387,7 +393,17 @@ class _AddTaskPageState extends State<AddTaskPage> {
             SliverToBoxAdapter(
               child: BottomAppBar(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    addTask(Task(
+                      title: _textController.text,
+                      description: _textControllerDescription.text,
+                      addedOn: DateTime.now().millisecondsSinceEpoch.toString(),
+                      deadline: deadline.microsecondsSinceEpoch.toString(),
+                      taskCompleted: taskCompleted,
+                      label: labels[_labelsValue!],
+                    ));
+                    log("task added successfully");
+                  },
                   style: TextButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary),
                   child: Text(

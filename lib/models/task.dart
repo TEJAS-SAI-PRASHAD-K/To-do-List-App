@@ -5,25 +5,25 @@ part 'task.g.dart';
 @HiveType(typeId: 2)
 class Task {
   @HiveField(1)
-  String title;
+  String? title;
   @HiveField(2)
-  String description;
+  String? description;
   @HiveField(3)
-  String addedOn;
+  String? addedOn;
   @HiveField(4)
-  String deadline;
+  String? deadline;
   @HiveField(5)
-  bool taskCompleted;
+  bool? taskCompleted;
   @HiveField(6)
-  String label;
+  String? label;
 
   Task({
-    required this.title,
-    required this.description,
-    required this.addedOn,
-    required this.deadline,
-    required this.taskCompleted,
-    required this.label,
+    this.title,
+    this.description,
+    this.addedOn,
+    this.deadline,
+    this.taskCompleted,
+    this.label,
   });
 
   Task copyWith({

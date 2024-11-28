@@ -17,8 +17,8 @@ class UserAdapter extends TypeAdapter<User> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return User(
-      username: fields[1] as String,
-      tasks: (fields[2] as List).cast<Task>(),
+      username: fields[1] as String?,
+      tasks: (fields[2] as List?)?.cast<Task>(),
     );
   }
 
