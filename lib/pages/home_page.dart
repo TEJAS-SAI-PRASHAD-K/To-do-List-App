@@ -1,8 +1,11 @@
 import 'package:first_1_flutter_application/pages/add_task_page.dart';
+import 'package:first_1_flutter_application/utils/hive/boxes.dart';
 import 'package:first_1_flutter_application/widgets/to_do_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/task.dart';
+import '../models/user.dart';
 import '../utils/others/check hive box.dart';
 import '../widgets/theme_switch_button.dart';
 
@@ -119,16 +122,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                       IconButton(
                         style: IconButton.styleFrom(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.secondary,
-                          shape: const CircleBorder(),
-                        ),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                            shape: const CircleBorder(),
+                            padding: EdgeInsets.zero),
                         icon: Icon(
                           Icons.add,
                           color: Theme.of(context).colorScheme.primary,
                           size: 22,
                         ),
-                        splashRadius: 30,
+                        // splashRadius: 30,
                         color: Colors.black,
                         onPressed: () {
                           Navigator.push(
@@ -145,12 +148,27 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SliverList.builder(
-            itemCount: tasks.length,
-            itemBuilder: (context, index) {
-              final Task task = tasks[index];
-              return ToDoTile(
-                task: task,
+          ValueListenableBuilder<Box<User>>(
+            valueListenable: Boxes.getUser().listenable(),
+            builder: (context, box, _) {
+              final tasks = box.values.cast<User>().first.tasks;
+              if (tasks == null || tasks.isEmpty) {
+                return const SliverToBoxAdapter(
+                  child: Center(
+                    child: Text("No tasks added yet"),
+                  ),
+                );
+              }
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final task = tasks[index];
+                    return ToDoTile(
+                      task: task,
+                    );
+                  },
+                  childCount: tasks.length,
+                ),
               );
             },
           ),

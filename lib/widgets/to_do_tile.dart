@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:first_1_flutter_application/utils/others/add_newline.dart';
 import 'package:flutter/material.dart';
 import '../models/task.dart';
+import 'deadline_time.dart';
 
 class ToDoTile extends StatefulWidget {
   final Task task;
@@ -10,7 +13,41 @@ class ToDoTile extends StatefulWidget {
   State<ToDoTile> createState() => _ToDoTileState();
 }
 
-class _ToDoTileState extends State<ToDoTile> {
+class _ToDoTileState extends State<ToDoTile> with TaskDeadlineRefreshMixin {
+
+  final TaskDeadlineManager _deadlineManager = TaskDeadlineManager();
+
+  @override
+  void initState() {
+    super.initState();
+    backgroundColor = _pickRandomColor();
+  }
+
+  @override
+  void onDeadlineRefresh() {
+    // Refresh logic when lifecycle state changes
+    setState(() {});
+  }
+
+  late Color backgroundColor;
+
+  final List<Color> colorOptions = [
+    const Color(0xFFE4B875), // #e4b875
+    const Color(0xFFB0BBBC), // #b0bbbc
+    const Color(0xFFBBB2CC), // #bbb2cc
+    const Color(0xFFCB9CA3), // #cb9ca3
+    const Color(0xFF9BCBC8), // #9bcbc8
+    const Color(0xFFC0CB9C), // #c0cb9c
+    const Color(0xFFA8C7D4), // #a8c7d4
+  ];
+
+  
+
+  Color _pickRandomColor() {
+    final random = Random();
+    return colorOptions[random.nextInt(colorOptions.length)];
+  }
+
   void taskCompletedStateSwitcher() {
     setState(() {
       widget.task.taskCompleted!
@@ -19,15 +56,50 @@ class _ToDoTileState extends State<ToDoTile> {
     });
   }
 
+  String convertMillisecondsToTimeWithAMPM(int milliseconds) {
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(milliseconds);
+
+    // Determine AM or PM
+    String period = dateTime.hour >= 12 ? "PM" : "AM";
+
+    // Convert to 12-hour format
+    int hourIn12HourFormat = dateTime.hour % 12;
+    if (hourIn12HourFormat == 0) {
+      hourIn12HourFormat = 12; // Handle midnight (0) as 12
+    }
+
+    String formattedTime =
+        "${hourIn12HourFormat.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')} $period";
+    return formattedTime;
+  }
+
+  String convertMillisecondsToTime(int milliseconds) {
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(milliseconds);
+    String formattedTime =
+        "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+    return formattedTime;
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
+
+    final addedOn =
+        convertMillisecondsToTimeWithAMPM(int.parse(widget.task.addedOn!));
+
+    final deadline =
+        convertMillisecondsToTimeWithAMPM(int.parse(widget.task.deadline!));
+
+    final timeDifference = _deadlineManager.calculateRemainingTime(widget.task.deadline!);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
       child: Container(
-        height: 250,
+        height: 230,
         width: MediaQuery.sizeOf(context).width,
         decoration: BoxDecoration(
-          color: Colors.greenAccent.shade200,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Padding(
@@ -42,7 +114,7 @@ class _ToDoTileState extends State<ToDoTile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      addNewlines(widget.task.title!, 15),
+                      addNewlines(widget.task.title!, 22),
                       style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w800,
@@ -69,10 +141,10 @@ class _ToDoTileState extends State<ToDoTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.task.addedOn!,
+                          addedOn,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 20,
+                            fontSize: 18,
                           ),
                         ),
                         const Text(
@@ -89,9 +161,9 @@ class _ToDoTileState extends State<ToDoTile> {
                       style: TextButton.styleFrom(
                         backgroundColor: Colors.green,
                       ),
-                      child: const Text(
-                        "30 min",
-                        style: TextStyle(
+                      child: Text(
+                        timeDifference,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
@@ -101,9 +173,9 @@ class _ToDoTileState extends State<ToDoTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.task.deadline!,
+                          deadline,
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

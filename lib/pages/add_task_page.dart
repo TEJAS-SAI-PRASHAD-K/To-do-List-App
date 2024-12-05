@@ -369,27 +369,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ],
               ),
             ),
-            // const SliverToBoxAdapter(
-            //   child: SizedBox(
-            //     height: 100,
-            //   ),
-            // ),
-            // SliverToBoxAdapter(
-            //   child: Padding(
-            //     padding: const EdgeInsets.all(12.0),
-            //     child: TextButton(
-            //       onPressed: () {},
-            //       style: TextButton.styleFrom(
-            //           backgroundColor: Theme.of(context).colorScheme.primary),
-            //       child: Text(
-            //         "Create",
-            //         style: TextStyle(
-            //             color: Theme.of(context).colorScheme.surface,
-            //             fontSize: 20),
-            //       ),
-            //     ),
-            //   ),
-            // ),
             SliverToBoxAdapter(
               child: BottomAppBar(
                 child: TextButton(
@@ -398,11 +377,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       title: _textController.text,
                       description: _textControllerDescription.text,
                       addedOn: DateTime.now().millisecondsSinceEpoch.toString(),
-                      deadline: deadline.microsecondsSinceEpoch.toString(),
+                      deadline: deadline.millisecondsSinceEpoch.toString(),
                       taskCompleted: taskCompleted,
                       label: labels[_labelsValue!],
                     ));
+
                     log("task added successfully");
+                    Navigator.pop(context);
                   },
                   style: TextButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary),

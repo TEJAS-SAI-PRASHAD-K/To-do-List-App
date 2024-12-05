@@ -1,6 +1,7 @@
 import 'package:first_1_flutter_application/pages/completed.dart';
 import 'package:first_1_flutter_application/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -10,6 +11,12 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+
+  @override
+  void dispose() {
+    Hive.box('todoTasks').close();
+    super.dispose();
+  }
   List<Widget> pagelist = const [
     HomePage(),
     CompletedListPage(),

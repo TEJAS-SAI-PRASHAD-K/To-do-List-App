@@ -10,7 +10,7 @@ void checkUserInHive() async {
   // Retrieve data by key
   final user = box.get('FIRSTUSER');
   if (user != null) {
-    log('User found in Hive: ${user.toString()}');
+    log('User found with tasks: ${user.tasks.toString()}');
   } else {
     log('No user found with the key "FIRSTUSER".');
   }
