@@ -3,8 +3,7 @@ import 'package:first_1_flutter_application/utils/hive/boxes.dart';
 import 'package:first_1_flutter_application/widgets/to_do_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import '../models/task.dart';
+import 'package:intl/intl.dart';
 import '../models/user.dart';
 import '../utils/others/check hive box.dart';
 import '../widgets/theme_switch_button.dart';
@@ -19,50 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Task> tasks = [
-    Task(
-      title: "Complete Flutter project",
-      description: "Finish the UI and integrate the backend APIs.",
-      addedOn: "2024-11-20",
-      deadline: "2024-11-30",
-      taskCompleted: false,
-      label: "Personal",
-    ),
-    Task(
-      title: "Team meeting",
-      description: "Discuss project roadmap and key deliverables.",
-      addedOn: "2024-11-21",
-      deadline: "2024-11-24",
-      taskCompleted: true,
-      label: "Work",
-    ),
-    Task(
-      title: "Prepare presentation",
-      description:
-          "Create slides for the Suicide Prevention and Mental Health presentation.",
-      addedOn: "2024-11-22",
-      deadline: "2024-11-25",
-      taskCompleted: false,
-      label: "Work",
-    ),
-    Task(
-      title: "Submit expense report",
-      description:
-          "Compile and submit the monthly expense report to the finance team.",
-      addedOn: "2024-11-15",
-      deadline: "2024-11-26",
-      taskCompleted: true,
-      label: "Work",
-    ),
-    Task(
-      title: "Code review",
-      description: "Review the pull requests and provide feedback.",
-      addedOn: "2024-11-18",
-      deadline: "2024-11-24",
-      taskCompleted: false,
-      label: "Urgent",
-    ),
-  ];
+  DateTime today = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +27,15 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         onPressed: () {
-          checkUserInHive();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (builder) => const AddTaskPage()));
         },
         child: const Icon(Icons.add),
       ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Theme.of(context).colorScheme.tertiary,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
             expandedHeight: 250,
             elevation: 0,
             flexibleSpace: FlexibleSpaceBar(
@@ -89,61 +46,41 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Row(children: [Text(DateFormat('EEEE').format(today))]),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(70, 30),
-                          padding: const EdgeInsets.all(0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
+                      Column(
+                        children: [
+                          Text(
+                            "${today.day}.${today.month}\n${DateFormat('MMM').format(today).toUpperCase()}",
+                            style: TextStyle(
+                              fontSize: 52,
+                              fontWeight: FontWeight.w500,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
-                        ),
-                        onPressed: () {},
-                        child:
-                            const Text("Today", style: TextStyle(fontSize: 10)),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(70, 30),
-                          padding: const EdgeInsets.all(0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: const Text("Tomorrow",
-                            style: TextStyle(fontSize: 10)),
-                      ),
-                      IconButton(
-                        style: IconButton.styleFrom(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.secondary,
-                            shape: const CircleBorder(),
-                            padding: EdgeInsets.zero),
-                        icon: Icon(
-                          Icons.add,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 22,
-                        ),
-                        // splashRadius: 30,
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16), // Add spacing
+                        height: 80, // Adjust height as needed
+                        width: 1, // Thickness of the line
                         color: Colors.black,
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (builder) => const AddTaskPage()));
-                        },
                       ),
-                      const ThemeSwitchButton(),
+                      const Column(
+                        children: [
+                          Text("NewYork"),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          Text("1.24"),
+                          Text("NewYork"),
+                        ],
+                      )
                     ],
                   ),
-                  const Text("Tuesday"),
                 ],
               ),
             ),
@@ -151,11 +88,43 @@ class _HomePageState extends State<HomePage> {
           ValueListenableBuilder<Box<User>>(
             valueListenable: Boxes.getUser().listenable(),
             builder: (context, box, _) {
-              final tasks = box.values.cast<User>().first.tasks;
+              if (box.isEmpty) {
+                return const SliverToBoxAdapter(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 200), // Add desired height here
+                        Text(
+                          "No tasks added yet!!",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w400),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              }
+
+              // Safely get the first user
+              final user = box.values.first;
+              final tasks = user.tasks;
+
+              // Check if tasks are null or empty
               if (tasks == null || tasks.isEmpty) {
                 return const SliverToBoxAdapter(
                   child: Center(
-                    child: Text("No tasks added yet"),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 200), // Add desired height here
+                        Text(
+                          "No tasks added yet!!",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w400),
+                        )
+                      ],
+                    ),
                   ),
                 );
               }

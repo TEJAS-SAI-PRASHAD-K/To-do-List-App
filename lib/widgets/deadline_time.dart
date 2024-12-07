@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 
 class TaskDeadlineManager {
   static TaskDeadlineManager? _instance;
-  Timer? _refreshTimer;
 
   factory TaskDeadlineManager() {
     _instance ??= TaskDeadlineManager._internal();
@@ -39,8 +37,6 @@ class TaskDeadlineManager {
 }
 
 mixin TaskDeadlineRefreshMixin<T extends StatefulWidget> on State<T> {
-  final TaskDeadlineManager _deadlineManager = TaskDeadlineManager();
-
   void onDeadlineRefresh() {
     // Override this method in your widget to implement specific refresh logic
     setState(() {});
