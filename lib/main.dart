@@ -1,6 +1,7 @@
 import 'package:first_1_flutter_application/models/hive_adapters.dart';
 import 'package:first_1_flutter_application/models/user.dart';
 import 'package:first_1_flutter_application/pages/bottom_nav_bar.dart';
+import 'package:first_1_flutter_application/theme/theme.dart';
 import 'package:first_1_flutter_application/utils/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,7 +31,7 @@ class MyApp extends ConsumerWidget {
     final theme = ref.watch(themeProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: theme,
+      theme: darkTheme,
       home: const BottomNavBar(),
     );
   }
