@@ -66,41 +66,38 @@ class _HomePageState extends State<HomePage> {
             elevation: 0,
             flexibleSpace: FlexibleSpaceBar(
               titlePadding:
-                  const EdgeInsets.only(left: 16.0, right: 16, bottom: 50.0),
+                  const EdgeInsets.only(left: 8.0, right: 16, bottom: 50.0),
               title: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(left: 10.0),
+                    padding: const EdgeInsets.only(left: 16.0),
                     child: Row(children: [
                       Text(
                         DateFormat('EEEE').format(today),
-                        style: const TextStyle(fontSize: 14),
+                        style: const TextStyle(fontSize: 18),
                       )
                     ]),
                   ),
                   Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Column(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8),
-                            child: Text(
-                              "${today.day}.${today.month}\n${DateFormat('MMM').format(today).toUpperCase()}",
-                              style: TextStyle(
-                                fontSize: 52,
-                                fontWeight: FontWeight.w500,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
+                          Text(
+                            "${today.day}.${today.month}\n${DateFormat('MMM').format(today).toUpperCase()}",
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.w600,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
+                        padding: const EdgeInsets.only(left: 8),
                         child: Container(
                           margin: const EdgeInsets.symmetric(
                               horizontal: 18), // Add spacing
@@ -119,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const Text(
                             "New Delhi",
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(fontSize: 8),
                           ),
                           const SizedBox(
                             height: 12,
@@ -131,10 +128,60 @@ class _HomePageState extends State<HomePage> {
                           ),
                           const Text(
                             "United Kingdom",
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(fontSize: 8),
                           ),
                         ],
                       )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(70, 30),
+                          padding: const EdgeInsets.all(0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child:
+                            const Text("Today", style: TextStyle(fontSize: 10)),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(70, 30),
+                          padding: const EdgeInsets.all(0),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40)),
+                        ),
+                        onPressed: () {},
+                        child: const Text("Tomorrow",
+                            style: TextStyle(fontSize: 10)),
+                      ),
+                      IconButton(
+                        style: IconButton.styleFrom(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondary,
+                            shape: const CircleBorder(),
+                            padding: EdgeInsets.zero),
+                        icon: Icon(
+                          Icons.add,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 22,
+                        ),
+                        // splashRadius: 30,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) => const AddTaskPage()));
+                        },
+                      ),
+                      const ThemeSwitchButton(),
                     ],
                   ),
                 ],

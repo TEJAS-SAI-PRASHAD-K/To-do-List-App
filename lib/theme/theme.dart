@@ -14,7 +14,7 @@ ThemeData darkTheme = ThemeData(
     secondary: darkSecondary,
     tertiary: darkTertiary,
   ),
-  fontFamily: 'Poppins',
+  fontFamily: 'LotaGrotesqueAlt3',
 );
 
 // Define your dark mode theme
@@ -30,5 +30,5 @@ ThemeData lightTheme = ThemeData(
     secondary: lightSecondary,
     tertiary: lightTertiary,
   ),
-  fontFamily: 'Poppins',
+  fontFamily: 'LotaGrotesqueAlt3',
 );
