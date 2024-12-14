@@ -4,6 +4,7 @@ import 'package:first_1_flutter_application/utils/others/add_newline.dart';
 import 'package:flutter/material.dart';
 import '../models/task.dart';
 import 'deadline_time.dart';
+import 'tasks_bottom_sheet.dart';
 
 class ToDoTile extends StatefulWidget {
   final Task task;
@@ -14,7 +15,6 @@ class ToDoTile extends StatefulWidget {
 }
 
 class _ToDoTileState extends State<ToDoTile> with TaskDeadlineRefreshMixin {
-
   final TaskDeadlineManager _deadlineManager = TaskDeadlineManager();
 
   @override
@@ -40,8 +40,6 @@ class _ToDoTileState extends State<ToDoTile> with TaskDeadlineRefreshMixin {
     const Color(0xFFC0CB9C), // #c0cb9c
     const Color(0xFFA8C7D4), // #a8c7d4
   ];
-
-  
 
   Color _pickRandomColor() {
     final random = Random();
@@ -84,114 +82,122 @@ class _ToDoTileState extends State<ToDoTile> with TaskDeadlineRefreshMixin {
   Widget build(
     BuildContext context,
   ) {
-
     final addedOn =
         convertMillisecondsToTimeWithAMPM(int.parse(widget.task.addedOn!));
 
     final deadline =
         convertMillisecondsToTimeWithAMPM(int.parse(widget.task.deadline!));
 
-    final timeDifference = _deadlineManager.calculateRemainingTime(widget.task.deadline!);
+    final timeDifference =
+        _deadlineManager.calculateRemainingTime(widget.task.deadline!);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8),
-      child: Container(
-        height: 230,
-        width: MediaQuery.sizeOf(context).width,
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(30),
+      child: GestureDetector(
+        onTap: () => showModalBottomSheet(
+          // shape: const RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.vertical(top: Radius.circular(32))),
+          context: context,
+          builder: (context) => const TasksBottomSheet(),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 16, 0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      addNewlines(widget.task.title!, 22),
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w800,
-                          color: Theme.of(context).colorScheme.primary),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 12, 0),
-                      child: IconButton(
-                        onPressed: taskCompletedStateSwitcher,
-                        icon: widget.task.taskCompleted!
-                            ? const Icon(Icons.check)
-                            : const Icon(Icons.close),
+        child: Container(
+          height: 230,
+          width: MediaQuery.sizeOf(context).width,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 16, 0, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        addNewlines(widget.task.title!, 22),
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).colorScheme.primary),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 12, 0),
+                        child: IconButton(
+                          onPressed: taskCompletedStateSwitcher,
+                          icon: widget.task.taskCompleted!
+                              ? const Icon(Icons.check)
+                              : const Icon(Icons.close),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          addedOn,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            addedOn,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
                           ),
-                        ),
-                        const Text(
-                          "Start",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                          const Text(
+                            "Start",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        ],
                       ),
-                      child: Text(
-                        timeDifference,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
+                      TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.green,
                         ),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          deadline,
+                        child: Text(
+                          timeDifference,
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        const Text(
-                          "End",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            deadline,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
+                          const Text(
+                            "End",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

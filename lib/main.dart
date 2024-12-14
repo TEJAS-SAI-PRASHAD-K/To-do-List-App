@@ -31,7 +31,7 @@ class MyApp extends ConsumerWidget {
     final theme = ref.watch(themeProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: lightTheme,
+      theme: theme,
       home: const BottomNavBar(),
     );
   }

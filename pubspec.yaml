@@ -103,6 +103,82 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
   fonts:
+    - family: LotaGrotesqueAlt1
+      fonts:
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Black.otf
+          weight: 900
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Black Italic.otf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Bold.otf
+          weight: 700
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Bold Italic.otf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Extra Light.otf
+          weight: 200
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Extra Light Italic.otf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Light.otf
+          weight: 300
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Light Italic.otf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Regular.otf
+          weight: 400
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Regular Italic.otf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Semi Bold.otf
+          weight: 600
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Semi Bold Italic.otf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Thin.otf
+          weight: 100
+        - asset: assets/fonts/lota-grotesque-alt-1/Los Andes  Lota Grotesque Alt 1 Thin Italic.otf
+          weight: 100
+          style: italic
+
+    - family: LotaGrotesqueAlt2
+      fonts:
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Black.otf
+          weight: 900
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Black Italic.otf
+          weight: 900
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Bold.otf
+          weight: 700
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Bold Italic.otf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Extra Light.otf
+          weight: 200
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Extra Light Italic.otf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Light.otf
+          weight: 300
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Light Italic.otf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Regular.otf
+          weight: 400
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Regular Italic.otf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Semi Bold.otf
+          weight: 600
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Semi Bold Italic.otf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Thin.otf
+          weight: 100
+        - asset: assets/fonts/lota-grotesque-alt-2/Los Andes  Lota Grotesque Alt 2 Thin Italic.otf
+          weight: 100
+          style: italic
+
     - family: LotaGrotesqueAlt3
       fonts:
         - asset: assets/fonts/lota-grotesque-alt-3/Los Andes  Lota Grotesque Alt 3 Black.otf
