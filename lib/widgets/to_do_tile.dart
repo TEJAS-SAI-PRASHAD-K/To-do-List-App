@@ -98,7 +98,7 @@ class _ToDoTileState extends State<ToDoTile> with TaskDeadlineRefreshMixin {
           // shape: const RoundedRectangleBorder(
           //     borderRadius: BorderRadius.vertical(top: Radius.circular(32))),
           context: context,
-          builder: (context) => const TasksBottomSheet(),
+          builder: (context) => TasksBottomSheet(task: widget.task),
         ),
         child: Container(
           height: 230,

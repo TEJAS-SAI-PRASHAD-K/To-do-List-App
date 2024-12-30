@@ -10,6 +10,6 @@ class CompletedListPage extends StatefulWidget {
 class _CompletedListPageState extends State<CompletedListPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Text("no page");
   }
 }

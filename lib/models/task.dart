@@ -5,19 +5,22 @@ part 'task.g.dart';
 @HiveType(typeId: 2)
 class Task {
   @HiveField(1)
-  String? title;
+  String? uuid;
   @HiveField(2)
-  String? description;
+  String? title;
   @HiveField(3)
-  String? addedOn;
+  String? description;
   @HiveField(4)
-  String? deadline;
+  String? addedOn;
   @HiveField(5)
-  bool? taskCompleted;
+  String? deadline;
   @HiveField(6)
+  bool? taskCompleted;
+  @HiveField(7)
   String? label;
 
   Task({
+    this.uuid,
     this.title,
     this.description,
     this.addedOn,
@@ -27,6 +30,7 @@ class Task {
   });
 
   Task copyWith({
+    String? uuid,
     String? title,
     String? description,
     String? addedOn,
@@ -35,6 +39,7 @@ class Task {
     String? label,
   }) =>
       Task(
+        uuid: uuid ?? this.uuid,
         title: title ?? this.title,
         description: description ?? this.description,
         addedOn: addedOn ?? this.addedOn,
@@ -44,6 +49,7 @@ class Task {
       );
 
   factory Task.fromJson(Map<String, dynamic> json) => Task(
+        uuid: json["uuid"],
         title: json["title"],
         description: json["description"],
         addedOn: json["addedOn"],
@@ -53,6 +59,7 @@ class Task {
       );
 
   Map<String, dynamic> toJson() => {
+        "uuid": uuid,
         "title": title,
         "description": description,
         "addedOn": addedOn,

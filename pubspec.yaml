@@ -42,6 +42,7 @@ dependencies:
   intl: ^0.20.1
   worldtime: ^1.3.0
   timezone: ^0.10.0
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:

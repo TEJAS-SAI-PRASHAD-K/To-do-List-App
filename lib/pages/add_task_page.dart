@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:first_1_flutter_application/utils/others/add_task.dart';
 import 'package:first_1_flutter_application/utils/others/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/task.dart';
 
@@ -14,6 +15,7 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+  static const uuid = Uuid();
   int? _dayValue = 1;
   int? _suggestionValue;
   int? _labelsValue;
@@ -374,6 +376,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 child: TextButton(
                   onPressed: () {
                     addTask(Task(
+                      uuid: uuid.v1(),
                       title: _textController.text,
                       description: _textControllerDescription.text,
                       addedOn: DateTime.now().millisecondsSinceEpoch.toString(),

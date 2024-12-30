@@ -9,7 +9,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/standalone.dart' as tz;
 
 import '../models/user.dart';
-import '../utils/others/check hive box.dart';
+// import '../utils/others/check hive box.dart';
 import '../widgets/theme_switch_button.dart';
 
 class HomePage extends StatefulWidget {

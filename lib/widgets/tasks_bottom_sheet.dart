@@ -6,55 +6,50 @@ import 'package:first_1_flutter_application/utils/others/date_time_picker.dart';
 import 'package:flutter/material.dart';
 
 class TasksBottomSheet extends StatefulWidget {
-  const TasksBottomSheet({super.key});
+  final Task task;
+  const TasksBottomSheet({super.key, required this.task});
 
   @override
   State<TasksBottomSheet> createState() => _TasksBottomSheetState();
 }
 
 class _TasksBottomSheetState extends State<TasksBottomSheet> {
-  int? _dayValue = 1;
-  int? _suggestionValue;
   int? _labelsValue;
-  DateTime dateTime = DateTime.now();
-  DateTime deadline = DateTime.now();
-  late TextEditingController _textController = TextEditingController();
-  late TextEditingController _textControllerDescription =
-      TextEditingController();
+  late DateTime dateTime;
+  late DateTime deadline;
+  late TextEditingController _textController;
+  late TextEditingController _textControllerDescription;
   late final bool taskCompleted = false;
+  List<String> labels = [
+    "Work",
+    "Urgent",
+    "Personal",
+    "Home",
+    "Health",
+    "Others"
+  ];
 
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController();
-    _textControllerDescription = TextEditingController();
-  }
 
-  @override
-  void dispose() {
-    _textController.dispose();
-    _textControllerDescription.dispose();
-    super.dispose();
+    // Initialize with the passed task's details
+    _textController = TextEditingController(text: widget.task.title);
+    _textControllerDescription =
+        TextEditingController(text: widget.task.description);
+
+    // Convert milliseconds to DateTime
+    deadline =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(widget.task.deadline!));
+    dateTime =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(widget.task.addedOn!));
+
+    // Set the label value
+    _labelsValue = labels.indexOf(widget.task.label!);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> days = ["Today", "Tomorrow"];
-    List<String> suggestions = [
-      "Complete Assignments",
-      "Schedule a Doctor Appointment",
-      "Send a Birthday Card",
-      "Go for a Jog",
-      "Schedule Team Meeting"
-    ];
-    List<String> labels = [
-      "Work",
-      "Urgent",
-      "Personal",
-      "Home",
-      "Health",
-      "Others"
-    ];
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -86,21 +81,35 @@ class _TasksBottomSheetState extends State<TasksBottomSheet> {
                       ),
                     ),
                     IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        padding: const EdgeInsets.all(8),
-                        style: IconButton.styleFrom(
-                            side: BorderSide(
-                                color: Theme.of(context).colorScheme.tertiary)),
-                        icon: const Icon(
-                          Icons.edit,
-                          size: 30,
-                        )),
+                      onPressed: () {
+                        editTask(
+                          Task(
+                            title: _textController.text,
+                            description: _textControllerDescription.text,
+                            addedOn: widget.task
+                                .addedOn, // Use the original addedOn timestamp
+                            deadline:
+                                deadline.millisecondsSinceEpoch.toString(),
+                            taskCompleted: widget.task
+                                .taskCompleted, // Preserve the original completed status
+                            label: labels[_labelsValue!],
+                          ),
+                        );
+
+                        log("task edited successfully");
+                        Navigator.pop(context);
+                      },
+                      padding: const EdgeInsets.all(8),
+                      style: IconButton.styleFrom(
+                          side: BorderSide(
+                              color: Theme.of(context).colorScheme.tertiary)),
+                      icon: const Icon(
+                        Icons.edit,
+                        size: 30,
+                      ),
+                    ),
                     IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: () {},
                         padding: const EdgeInsets.all(8),
                         style: IconButton.styleFrom(
                             side: BorderSide(
