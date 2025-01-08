@@ -84,6 +84,7 @@ class _TasksBottomSheetState extends State<TasksBottomSheet> {
                       onPressed: () {
                         editTask(
                           Task(
+                            uuid: widget.task.uuid,
                             title: _textController.text,
                             description: _textControllerDescription.text,
                             addedOn: widget.task

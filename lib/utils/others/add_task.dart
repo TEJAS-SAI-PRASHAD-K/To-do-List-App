@@ -45,7 +45,7 @@ void editTask(Task task) {
   List<Task> userTasks = user.tasks ?? [];
 
   for (int i = 0; i < userTasks.length; i++) {
-    if (userTasks[i].addedOn == task.addedOn) {
+    if (userTasks[i].uuid == task.uuid) {
       userTasks[i] = task; // Update the task in the list
     }
   }
