@@ -50,15 +50,30 @@ void editTask(Task task) {
     }
   }
 
-  for (Task eachTask in userTasks) {
-    log("Each task after update: ${eachTask.title} ${eachTask.label}");
-  }
-
   // Update the user's tasks
   user.tasks = userTasks;
 
   // Save the updated user back to the box
   box.put('FIRSTUSER', user);
   
-  log("Updated new task: ${task.description}, ${task.title}");
+}
+
+void deleteTask(Task task) {
+  // Access the Hive box for users
+  final box = Boxes.getUser();
+
+  // Retrieve the existing user from the box
+  final User user = box.get('FIRSTUSER') ?? User();
+
+  // Access the user's task list
+  List<Task> userTasks = user.tasks ?? [];
+
+  // Remove the task with matching UUID
+  userTasks.removeWhere((t) => t.uuid == task.uuid);
+
+  // Update the user's tasks
+  user.tasks = userTasks;
+
+  // Save the updated user back to the box
+  box.put('FIRSTUSER', user);
 }

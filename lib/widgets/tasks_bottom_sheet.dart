@@ -110,7 +110,14 @@ class _TasksBottomSheetState extends State<TasksBottomSheet> {
                       ),
                     ),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          deleteTask(
+                            Task(
+                              uuid: widget.task.uuid,
+                            ),
+                          );
+                          Navigator.pop(context);
+                        },
                         padding: const EdgeInsets.all(8),
                         style: IconButton.styleFrom(
                             side: BorderSide(
