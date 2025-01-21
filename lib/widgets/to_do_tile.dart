@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:first_1_flutter_application/utils/others/add_newline.dart';
 import 'package:flutter/material.dart';
 import '../models/task.dart';
+import '../utils/hive/boxes.dart';
 import 'deadline_time.dart';
 import 'tasks_bottom_sheet.dart';
 
@@ -47,10 +48,16 @@ class _ToDoTileState extends State<ToDoTile> with TaskDeadlineRefreshMixin {
   }
 
   void taskCompletedStateSwitcher() {
+    // Get the user box
+    final userBox = Boxes.getUser();
+    final user = userBox.values.first;
+
     setState(() {
-      widget.task.taskCompleted!
-          ? widget.task.taskCompleted = false
-          : widget.task.taskCompleted = true;
+      widget.task.taskCompleted = !widget.task.taskCompleted!;
+
+      // Update the task in the user's tasks list
+      // This triggers the ValueListenableBuilder to rebuild
+      userBox.put('FIRSTUSER', user);
     });
   }
 
@@ -130,8 +137,14 @@ class _ToDoTileState extends State<ToDoTile> with TaskDeadlineRefreshMixin {
                         child: IconButton(
                           onPressed: taskCompletedStateSwitcher,
                           icon: widget.task.taskCompleted!
-                              ? const Icon(Icons.check)
-                              : const Icon(Icons.close),
+                              ? const Icon(
+                                  Icons.check_circle_outline_outlined,
+                                  size: 30,
+                                )
+                              : const Icon(
+                                  Icons.check,
+                                  size: 30,
+                                ),
                         ),
                       ),
                     ],

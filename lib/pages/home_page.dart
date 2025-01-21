@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: 200), // Add desired height here
+                        SizedBox(height: 200),
                         Text(
                           "No tasks added yet!!",
                           style: TextStyle(
@@ -223,18 +223,17 @@ class _HomePageState extends State<HomePage> {
                 );
               }
 
-              // Safely get the first user
               final user = box.values.first;
-              final tasks = user.tasks;
+              final allTasks = user.tasks;
 
               // Check if tasks are null or empty
-              if (tasks == null || tasks.isEmpty) {
+              if (allTasks == null || allTasks.isEmpty) {
                 return const SliverToBoxAdapter(
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: 200), // Add desired height here
+                        SizedBox(height: 200),
                         Text(
                           "No tasks added yet!!",
                           style: TextStyle(
@@ -245,15 +244,36 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               }
+              final incompleteTasks =
+                  allTasks.where((task) => !task.taskCompleted!).toList();
+
+              if (incompleteTasks.isEmpty) {
+                return const SliverToBoxAdapter(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 200),
+                        Text(
+                          "No pending tasks!",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w400),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              }
+
               return SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    final task = tasks[index];
+                    final task = incompleteTasks[index];
                     return ToDoTile(
                       task: task,
                     );
                   },
-                  childCount: tasks.length,
+                  childCount: incompleteTasks.length,
                 ),
               );
             },
